@@ -1,0 +1,25 @@
+stages:
+  - test
+  - kustomize
+
+generate:
+  stage: kustomize
+  image: 
+    name: bitnami/kubectl:1.18
+    entrypoint: [""]
+  except:
+    refs:
+      - tags
+  script:
+    - bash check-generation.sh
+  tags:
+    - docker
+
+include:
+  - template: Security/Secret-Detection.gitlab-ci.yml
+secret_detection:
+  tags: 
+    - docker
+secret_detection_default_branch:
+  tags: 
+    - docker
